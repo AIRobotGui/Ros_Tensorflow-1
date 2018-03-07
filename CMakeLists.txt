@@ -3,7 +3,10 @@ project(Ros_Tensorflow)
 ## catkin构建时需要的组件包。
 ## 是依赖包，是message_generation、 std_msgs和roscpp。
 ## 如果这些功能包不存在，在构建过程中会发生错误。
-find_package(catkin REQUIRED COMPONENTS message_generation std_msgs roscpp)
+set(OpenCV_DIR /home/yiming/opencv-2.4.13.6/build)
+find_package(catkin REQUIRED COMPONENTS cv_bridge image_transport tf2_msgs tf tf2_ros roscpp sensor_msgs std_msgs
+        OpenCV REQUIRED)
+
 ## 消息声明：MsgTutorial.msg
 add_message_files(FILES MsgTutorial.msg)
 ## 这是设置依赖性消息的选项。
@@ -25,3 +28,8 @@ target_link_libraries(topic_publisher ${catkin_LIBRARIES})
 add_executable(topic_subscriber src/topic_subscriber.cpp)
 add_dependencies(topic_subscriber ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(topic_subscriber ${catkin_LIBRARIES})
+
+#add_executable(lr src/lr.cpp)
+#target_link_libraries(lr ${catkin_LIBRARIES}
+#                           ${Opencv_LIBS})
+#add_dependencies(lr beginner_tutorials_generate_messages_cpp)
