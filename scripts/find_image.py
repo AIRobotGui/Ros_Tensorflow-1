@@ -1,29 +1,18 @@
 #!/usr/bin/env python
-"""OpenCV feature detectors with ros CompressedImage Topics in python.
- 
-This example subscribes to a ros topic containing sensor_msgs 
-CompressedImage. It converts the CompressedImage into a numpy.ndarray, 
-then detects and marks features in that image. It finally displays 
-and publishes the new image - again as CompressedImage topic.
-"""
 # Python libs
 import sys, time
-
 # numpy and scipy
 import numpy as np
 from scipy.ndimage import filters
-
 # OpenCV
 import cv2
-
 # Ros libraries
 import roslib
 import rospy
 from cv_bridge import CvBridge
 # Ros Messages
 from sensor_msgs.msg import Image
-# We do not use cv_bridge it does not support CompressedImage in python
-# from cv_bridge import CvBridge, CvBridgeError
+
 
 VERBOSE=False
 
@@ -43,8 +32,6 @@ class image_feature:
 
 
     def callback(self, ros_data):
-        '''Callback function of subscribed topic. 
-        Here images get converted and features detected'''
         bridge = CvBridge()
         img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
         cv2.imshow("listener", img)
