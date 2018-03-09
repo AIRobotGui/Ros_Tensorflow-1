@@ -4,7 +4,7 @@ project(Ros_Tensorflow)
 ## 是依赖包，是message_generation、 std_msgs和roscpp。
 ## 如果这些功能包不存在，在构建过程中会发生错误。
 set(OpenCV_DIR /home/yiming/opencv-2.4.13.6/build)
-find_package(catkin REQUIRED COMPONENTS cv_bridge image_transport tf2_msgs tf tf2_ros roscpp sensor_msgs std_msgs
+find_package(catkin REQUIRED COMPONENTS cv_bridge image_transport tf2_msgs tf tf2_ros roscpp sensor_msgs std_msgs 
         OpenCV REQUIRED)
 
 ## 消息声明：MsgTutorial.msg
