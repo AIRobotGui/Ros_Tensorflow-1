@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # Python libs
 import sys, time
-
 # numpy and scipy
 import numpy as np
 from scipy.ndimage import filters
-
 # OpenCV
 import cv2
+<<<<<<< HEAD
 import random
+=======
+>>>>>>> fcf250e6923836f1a81402f52f52109c1fbebfe2
 # Ros libraries
 import roslib
 import rospy
