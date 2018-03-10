@@ -73,9 +73,8 @@ class image_feature:
             pub.publish(face)
             cv.imshow("face",face)
 
-                    
-        #
-        #
+        #bridge = CvBridge()
+        #img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
         #cv2.imshow("listener", img)
         #cv2.waitKey(3)
         #print "find the image"
