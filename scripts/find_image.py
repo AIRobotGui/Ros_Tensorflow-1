@@ -10,7 +10,9 @@ import random
 # Ros libraries
 import roslib
 import rospy
-import dlib
+#import dlib
+import threading as thd
+import time
 from cv_bridge import CvBridge
 # Ros Messages
 from sensor_msgs.msg import Image
@@ -49,37 +51,40 @@ class image_feature:
 
 
     def callback(self, ros_data):
-        bridge = CvBridge()
-        img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
-        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#        bridge = CvBridge()
+#        img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
+#        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-        dets = detector(gray_img, 1)
+#        dets = detector(gray_img, 1)
 
 
-        for i, d in enumerate(dets):
-            x1 = d.top() if d.top() > 0 else 0
-            y1 = d.bottom() if d.bottom() > 0 else 0
-            x2 = d.left() if d.left() > 0 else 0
-            y2 = d.right() if d.right() > 0 else 0
+#        for i, d in enumerate(dets):
+#            x1 = d.top() if d.top() > 0 else 0
+#            y1 = d.bottom() if d.bottom() > 0 else 0
+#            x2 = d.left() if d.left() > 0 else 0
+#            y2 = d.right() if d.right() > 0 else 0
 
-            face = img[x1:y1, x2:y2]
-            face = relight(face, random.uniform(0.5, 1.5), random.randint(-50, 50))
-            face = cv2.resize(face, (size,size))
+#            face = img[x1:y1, x2:y2]
+#            face = relight(face, random.uniform(0.5, 1.5), random.randint(-50, 50))
+#            face = cv2.resize(face, (size,size))
             #cv2.imshow('image', face)
             #cv2.imwrite(output_dir+'/'+str(index)+'.jpg', face)
-            pub.publish(face)
-            cv.imshow("face",face)
+#            pub.publish(face)
+#            cv.imshow("face",face)
 
-        #bridge = CvBridge()
-        #img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
-        #cv2.imshow("listener", img)
-        #cv2.waitKey(3)
-        #print "find the image"
+         bridge = CvBridge()
+         img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
+         cv2.imshow("listener", img)
+         cv2.waitKey(3)
+         
+         #image_pub.publish(ros_data)
+         print "find the image"
 
 def main(args):
     '''Initializes and cleanup ros node'''
     ic = image_feature()
     rospy.init_node('image_feature', anonymous=True)
+    #rospy.init_node('image_feature', anonymous=True)
     try:
         rospy.spin()
     except KeyboardInterrupt:
