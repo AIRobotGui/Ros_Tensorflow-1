@@ -77,6 +77,7 @@ class image_feature:
          cv2.imshow("listener", img)
          cv2.waitKey(3)
          
+         
          #image_pub.publish(ros_data)
          print "find the image"
 
