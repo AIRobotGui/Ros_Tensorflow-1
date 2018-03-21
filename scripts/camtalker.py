@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # license removed for brevity
 import rospy
+import datetime
 from sensor_msgs.msg import Image
 import cv2
 from cv_bridge import CvBridge
@@ -16,6 +17,8 @@ def talker():
         cv2.imshow("talker", img)
         cv2.waitKey(3)
         pub.publish(bridge.cv2_to_imgmsg(img, "bgr8"))
+        nowTime=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        print("find the camera"+nowTime)
         rate.sleep()
 
 if __name__ == '__main__':
