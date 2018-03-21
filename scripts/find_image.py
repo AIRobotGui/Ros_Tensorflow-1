@@ -10,16 +10,20 @@ import random
 # Ros libraries
 import roslib
 import rospy
-#import dlib
+import dlib
 import threading as thd
 import time
 from cv_bridge import CvBridge
 # Ros Messages
 from sensor_msgs.msg import Image
+#from PIL as Image2
+
 
 
 VERBOSE=False
-
+output_dir = './my_faces'
+size = 64
+index = 1
 class image_feature:
     def __init__(self):
         '''Initialize ros publisher, ros subscriber'''
@@ -29,7 +33,7 @@ class image_feature:
         # self.bridge = CvBridge()
 
         # subscribed Topic
-        self.subscriber = rospy.Subscriber("/usb_cam/image_raw",
+        self.subscriber = rospy.Subscriber("/icamera/image",
             Image, self.callback,  queue_size = 1)
         if VERBOSE :
             print "subscribed to /usb_cam/image_raw"
@@ -51,38 +55,46 @@ class image_feature:
 
 
     def callback(self, ros_data):
-#        bridge = CvBridge()
-#        img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
-#        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        bridge = CvBridge()
+        img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        detector = dlib.get_frontal_face_detector()
+        dets = detector(gray_img, 1)
+        #cv2.imshow("listener", img)
 
-#        dets = detector(gray_img, 1)
+        for i, d in enumerate(dets):
+            x1 = d.top() if d.top() > 0 else 0
+            y1 = d.bottom() if d.bottom() > 0 else 0
+            x2 = d.left() if d.left() > 0 else 0
+            y2 = d.right() if d.right() > 0 else 0
 
+            face = img[x1:y1, x2:y2]
+            #face = relight(face, random.uniform(0.5, 1.5), random.randint(-50, 50))
+            face = cv2.resize(face, (size,size))
+            cv2.imshow('image', face)
+            cv2.waitKey(3)
+            global index
+            #cv2.imwrite(output_dir+'/'+"face"+str(index)+'.jpg', face)
+            index = index+1
+            print face
+            bridge2 = CvBridge()
+            self.image_pub.publish(bridge2.cv2_to_imgmsg(face, "bgr8"))
 
-#        for i, d in enumerate(dets):
-#            x1 = d.top() if d.top() > 0 else 0
-#            y1 = d.bottom() if d.bottom() > 0 else 0
-#            x2 = d.left() if d.left() > 0 else 0
-#            y2 = d.right() if d.right() > 0 else 0
-
-#            face = img[x1:y1, x2:y2]
-#            face = relight(face, random.uniform(0.5, 1.5), random.randint(-50, 50))
-#            face = cv2.resize(face, (size,size))
-            #cv2.imshow('image', face)
-            #cv2.imwrite(output_dir+'/'+str(index)+'.jpg', face)
-#            pub.publish(face)
 #            cv.imshow("face",face)
 
-         bridge = CvBridge()
-         img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
-         cv2.imshow("listener", img)
-         cv2.waitKey(3)
+#         bridge = CvBridge()
+#         img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
+#         cv2.imshow("listener", img)
+#         cv2.waitKey(3)
          
          
          #image_pub.publish(ros_data)
-         print "find the image"
+#         print "find the image"
 
 def main(args):
     '''Initializes and cleanup ros node'''
+#    detector = dlib.get_frontal_face_detector()
+    
     ic = image_feature()
     rospy.init_node('image_feature', anonymous=True)
     #rospy.init_node('image_feature', anonymous=True)
