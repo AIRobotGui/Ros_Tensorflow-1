@@ -21,14 +21,14 @@ from sensor_msgs.msg import Image
 
 
 VERBOSE=False
-output_dir = './my_faces'
+output_dir = '/home/yiming/catkin_ws/src/Ros_Tensorflow/scripts/faces'
 size = 64
 index = 1
 class image_feature:
     def __init__(self):
         '''Initialize ros publisher, ros subscriber'''
         # topic where we publish
-        self.image_pub = rospy.Publisher("/find_image/img",
+        self.image_pub = rospy.Publisher("/find_face/img",
             Image, queue_size=10)
         # self.bridge = CvBridge()
 
@@ -72,9 +72,9 @@ class image_feature:
             #face = relight(face, random.uniform(0.5, 1.5), random.randint(-50, 50))
             face = cv2.resize(face, (size,size))
             cv2.imshow('image', face)
-            cv2.waitKey(3)
+            cv2.waitKey(1)
             global index
-            #cv2.imwrite(output_dir+'/'+"face"+str(index)+'.jpg', face)
+            cv2.imwrite(output_dir+'/'+"face"+str(index)+'.jpg', face)
             index = index+1
             print face
             bridge2 = CvBridge()
