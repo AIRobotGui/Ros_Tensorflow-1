@@ -74,7 +74,7 @@ class image_feature:
             cv2.imshow('image', face)
             cv2.waitKey(1)
             global index
-            cv2.imwrite(output_dir+'/'+"face"+str(index)+'.jpg', face)
+            #cv2.imwrite(output_dir+'/'+"face"+str(index)+'.jpg', face)
             index = index+1
             print face
             bridge2 = CvBridge()
