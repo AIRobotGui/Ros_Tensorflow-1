@@ -1,3 +1,2 @@
 # Ros_Tensorflow
-Laerning 《ROS Robotics Projects》 and 《ROS Robot Programming》
-Deep Learning Using Tensorflow
+This is a project combining ROS and Tensorflow for face recognition.
