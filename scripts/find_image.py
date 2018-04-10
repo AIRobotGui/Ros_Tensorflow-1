@@ -80,16 +80,14 @@ class image_feature:
             bridge2 = CvBridge()
             self.image_pub.publish(bridge2.cv2_to_imgmsg(face, "bgr8"))
 
-#            cv.imshow("face",face)
-
-#         bridge = CvBridge()
-#         img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
-#         cv2.imshow("listener", img)
-#         cv2.waitKey(3)
-         
-         
+         #cv.imshow("face",face)
+         #bridge = CvBridge()
+         #img = bridge.imgmsg_to_cv2(ros_data, "bgr8")
+         #cv2.imshow("listener", img)
+         #cv2.waitKey(3) 
          #image_pub.publish(ros_data)
-#         print "find the image"
+         #print "find the image"
+
 
 def main(args):
     '''Initializes and cleanup ros node'''
